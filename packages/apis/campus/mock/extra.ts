@@ -119,7 +119,8 @@ export const PAGE_SEEDS: PageSeed[] = [
 	{ id: "M052", group: "G50", title: "数据字典", path: "/zdgl/", icon: "files", sort: 52 },
 	{ id: "M053", group: "G50", title: "消息中心", path: "/msg/", icon: "notice", sort: 53 },
 	{ id: "M054", group: "G50", title: "操作日志", path: "/rzgl/", icon: "document", sort: 54 },
-	{ id: "M055", group: "G50", title: "资产台账", path: "/zctz/", icon: "files", sort: 55 }
+	{ id: "M055", group: "G50", title: "资产台账", path: "/zctz/", icon: "files", sort: 55 },
+	{ id: "M056", group: "G50", title: "导入导出中心", path: "/dzzx/", icon: "files", sort: 56 }
 ];
 
 /** 生成扁平菜单（分组 + 页面 + 按钮） */

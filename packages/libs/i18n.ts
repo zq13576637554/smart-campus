@@ -41,6 +41,7 @@ export const MENU_I18N: Record<string, { zh: string; en: string }> = {
 	"/xtgl/": { zh: "系统管理", en: "System" },
 	"/cdgl/": { zh: "菜单权限", en: "Menu & Auth" },
 	"/zdgl/": { zh: "数据字典", en: "Dictionary" },
+	"/dzzx/": { zh: "导入导出中心", en: "Import / Export" },
 	"/msg/": { zh: "消息中心", en: "Messages" },
 	"/rzgl/": { zh: "操作日志", en: "Audit Logs" },
 	"/zctz/": { zh: "资产台账", en: "Assets" },

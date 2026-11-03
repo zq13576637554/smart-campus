@@ -24,6 +24,7 @@ import { buildReportInsight } from "./insight";
 import { parseNaturalQuery } from "./nlq";
 import { buildParentReport } from "./parentReport";
 import { buildTodo } from "./todo";
+import { buildExportData, EXPORT_TYPES, exportLogs, IMPORT_TYPES } from "./dataCenter";
 import {
 	db,
 	type AccessRecord,
@@ -1977,6 +1978,43 @@ export const mockRoutes: MockRoute[] = [
 				]
 			});
 		}
+	},
+
+	/* ---------------- 导入导出中心 ---------------- */
+	{
+		method: "GET",
+		match: "/data/types",
+		handler: () => ok({ imports: IMPORT_TYPES, exports: EXPORT_TYPES })
+	},
+	{
+		method: "GET",
+		match: "/data/export-logs",
+		handler: () => ok(exportLogs)
+	},
+	// 注意：必须排在 /data/export 之前，否则会被其前缀匹配吃掉
+	{
+		method: "POST",
+		match: "/data/export-log",
+		handler: ({ params }) => {
+			const type = EXPORT_TYPES.find(t => t.key === params.typeKey);
+			const log = {
+				id: `EX${String(Date.now()).slice(-8)}`,
+				fileName: params.fileName || `${type?.label || "数据"}.csv`,
+				typeKey: params.typeKey || "",
+				typeLabel: type?.label || "未知类型",
+				total: Number(params.total) || 0,
+				operator: params.operator || "系统管理员",
+				time: dayjs().format("YYYY-MM-DD HH:mm:ss"),
+				status: "成功"
+			};
+			exportLogs.unshift(log);
+			return ok(log);
+		}
+	},
+	{
+		method: "POST",
+		match: "/data/export",
+		handler: ({ params }) => ok(buildExportData(params.key))
 	},
 
 	/* ---------------- 待办中心 ---------------- */

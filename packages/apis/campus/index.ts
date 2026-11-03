@@ -8,6 +8,7 @@ export * from "./api/life";
 export * from "./api/report";
 export * from "./api/ai";
 export * from "./api/todo";
+export * from "./api/dataCenter";
 export * from "./api/dashboard";
 export { default as http } from "./http";
 export { service } from "lmUtils/api";

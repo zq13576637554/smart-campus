@@ -111,7 +111,7 @@ test.describe("智慧校园主链路", () => {
 		await expect(page.locator(".import-page__result-title")).toContainText("成功 1 条");
 	});
 
-	test("全部 35 条路由可访问，且无控制台错误", async ({ page }) => {
+	test("全部 36 条路由可访问，且无控制台错误", async ({ page }) => {
 		// CI runner 比本机慢，这条用例要遍历全部路由，放宽超时
 		test.setTimeout(180_000);
 
@@ -132,7 +132,7 @@ test.describe("智慧校园主链路", () => {
 			"/ksgl/", "/xkzx/", "/ssgl/", "/ykt/", "/mjgl/", "/tzgg/", "/qjgl/", "/ssbx/",
 			"/fkyy/", "/jfzx/", "/xfyj/", "/tsjy/", "/xcgl/", "/nhjc/", "/zhsz/", "/ai/",
 			"/daping/", "/bbzx/", "/xtgl/", "/cdgl/", "/zdgl/", "/msg/", "/rzgl/", "/zctz/",
-			"/grzx/", "/parent/"
+			"/dzzx/", "/grzx/", "/parent/"
 		];
 
 		const blank: string[] = [];

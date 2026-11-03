@@ -1,0 +1,9 @@
+{
+	"name": "apps_campus_mdus_dzzx",
+	"description": "导入导出中心",
+	"private": true,
+	"mdu": {
+		"path": "/dzzx/",
+		"title": "导入导出中心"
+	}
+}
