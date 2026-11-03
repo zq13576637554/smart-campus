@@ -71,6 +71,7 @@ import NSummaryCard from "lmCmpsBasic/NSummaryCard";
 import AiQuery from "lmCmpsBiz/AiQuery";
 import { useTb } from "lmHooks/cmps/useTb";
 import { useDict } from "lmHooks/tools/useDict";
+import { buildAiSchema, normalizeBarItems } from "./aiSchema";
 import { backPageDoEvent } from "lmUtils/eventBus";
 import { dayjs } from "lmUtils/time";
 
@@ -151,28 +152,7 @@ const aiVisible = ref(false);
 const { dictOptions } = useDict();
 
 /** 由查询栏配置推导「智能查询」可识别的字段 */
-const aiSchema = computed(() => {
-	const items = _bars.value?.[0]?.items || [];
-	return items
-		.map((it: any) => {
-			const cfg = it.props || {};
-			let kind: "text" | "select" | "enum" | "date" = "text";
-			let options: { label: string; value: any }[] = [];
-
-			if (it.type === "enumSelect") {
-				kind = "enum";
-				options = dictOptions(cfg.type || cfg.dictType || "").map(d => ({ label: d.label, value: d.value }));
-			} else if (Array.isArray(cfg.options) && cfg.options.length) {
-				kind = "select";
-				options = cfg.options.map((o: any) => ({ label: o.label, value: o.value }));
-			} else if (["daterange", "datetimerange", "date", "month"].includes(cfg.type)) {
-				kind = "date";
-			}
-
-			return { key: it.key, label: it.label, kind, options };
-		})
-		.filter((s: any) => s.key);
-});
+const aiSchema = computed(() => buildAiSchema(normalizeBarItems(_bars.value), dictOptions));
 
 /** 应用智能查询条件：回填查询栏并触发查询 */
 const onAiApply = (filters: Record<string, any>) => {
