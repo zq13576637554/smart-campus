@@ -1,0 +1,9 @@
+{
+	"name": "apps_campus_mdus_cjgl",
+	"description": "学业成绩",
+	"private": true,
+	"mdu": {
+		"path": "/cjgl/",
+		"title": "学业成绩"
+	}
+}

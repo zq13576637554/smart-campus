@@ -1,0 +1,46 @@
+{
+	"name": "smart-campus",
+	"version": "1.0.0",
+	"private": true,
+	"description": "智慧校园系统（参考 rs.ict-saas 架构）",
+	"type": "module",
+	"scripts": {
+		"dev": "vite",
+		"build": "vue-tsc --noEmit -p tsconfig.json && vite build",
+		"build:only": "vite build",
+		"preview": "vite preview",
+		"typecheck": "vue-tsc --noEmit -p tsconfig.json",
+		"test:unit": "vitest run",
+		"test:unit:watch": "vitest",
+		"test:e2e": "playwright test",
+		"test:e2e:report": "playwright show-report",
+		"test:ai-proxy": "node scripts/ai-proxy.check.mjs",
+		"gen:routes": "node scripts/gen-routes.mjs",
+		"create:module": "node scripts/create-module.mjs"
+	},
+	"dependencies": {
+		"@element-plus/icons-vue": "2.3.1",
+		"axios": "1.7.9",
+		"dayjs": "1.11.13",
+		"echarts": "5.6.0",
+		"element-plus": "2.9.1",
+		"nprogress": "0.2.0",
+		"pinia": "2.3.0",
+		"qs": "6.13.1",
+		"vue": "3.5.13",
+		"vue-router": "4.5.0"
+	},
+	"devDependencies": {
+		"@playwright/test": "1.49.1",
+		"@types/node": "22.10.2",
+		"@types/nprogress": "0.2.3",
+		"@vitejs/plugin-vue": "5.2.1",
+		"less": "4.2.1",
+		"playwright": "1.49.1",
+		"typescript": "5.7.2",
+		"vite": "6.0.5",
+		"vitest": "2.1.8",
+		"vue-tsc": "2.2.0"
+	},
+	"packageManager": "pnpm@10.26.2"
+}

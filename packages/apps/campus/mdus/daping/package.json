@@ -1,0 +1,9 @@
+{
+	"name": "apps_campus_mdus_daping",
+	"description": "数据大屏",
+	"private": true,
+	"mdu": {
+		"path": "/daping/",
+		"title": "数据大屏"
+	}
+}

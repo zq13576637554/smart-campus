@@ -1,0 +1,9 @@
+{
+	"name": "apps_campus_mdus_login",
+	"description": "登录模块",
+	"private": true,
+	"mdu": {
+		"path": "/login/",
+		"title": "登录"
+	}
+}

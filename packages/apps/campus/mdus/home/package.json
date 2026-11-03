@@ -1,0 +1,9 @@
+{
+	"name": "apps_campus_mdus_home",
+	"description": "首页驾驶舱",
+	"private": true,
+	"mdu": {
+		"path": "/home/",
+		"title": "首页"
+	}
+}

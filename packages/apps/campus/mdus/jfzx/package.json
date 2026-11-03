@@ -1,0 +1,9 @@
+{
+	"name": "apps_campus_mdus_jfzx",
+	"description": "缴费中心",
+	"private": true,
+	"mdu": {
+		"path": "/jfzx/",
+		"title": "缴费中心"
+	}
+}

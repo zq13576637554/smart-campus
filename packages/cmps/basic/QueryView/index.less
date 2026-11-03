@@ -1,0 +1,76 @@
+.query-view {
+	background: var(--sc-card);
+	border-radius: var(--sc-radius-lg);
+	box-shadow: var(--sc-shadow-1);
+	padding: 16px 16px 4px;
+	margin-bottom: 0;
+
+	&__form {
+		display: grid;
+		gap: 12px 18px;
+		align-items: center;
+	}
+
+	&__item {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		min-width: 0;
+	}
+
+	&__label {
+		flex: 0 0 auto;
+		min-width: 64px;
+		font-size: 13px;
+		color: var(--sc-text-2);
+		text-align: right;
+		white-space: nowrap;
+	}
+
+	&__control {
+		flex: 1;
+		min-width: 0;
+	}
+
+	&__actions {
+		display: flex;
+		align-items: center;
+		gap: 8px;
+		justify-content: flex-end;
+		grid-column-end: -1;
+		padding-bottom: 12px;
+	}
+
+	/* ---------------- 移动端：单列堆叠 ---------------- */
+	@media (max-width: 768px) {
+		padding: 12px 12px 0;
+
+		&__form {
+			grid-template-columns: 1fr !important;
+			gap: 10px;
+		}
+
+		&__item {
+			flex-direction: column;
+			align-items: stretch;
+			gap: 4px;
+		}
+
+		&__label {
+			min-width: 0;
+			font-size: 12px;
+			text-align: left;
+		}
+
+		&__actions {
+			grid-column-end: auto;
+			justify-content: flex-start;
+			flex-wrap: wrap;
+			padding: 2px 0 12px;
+
+			.el-button {
+				margin-left: 0;
+			}
+		}
+	}
+}

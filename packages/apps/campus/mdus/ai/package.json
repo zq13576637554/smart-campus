@@ -1,0 +1,9 @@
+{
+	"name": "apps_campus_mdus_ai",
+	"description": "AI 校园助手",
+	"private": true,
+	"mdu": {
+		"path": "/ai/",
+		"title": "AI 校园助手"
+	}
+}

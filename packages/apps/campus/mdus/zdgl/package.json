@@ -1,0 +1,9 @@
+{
+	"name": "apps_campus_mdus_zdgl",
+	"description": "数据字典管理",
+	"private": true,
+	"mdu": {
+		"path": "/zdgl/",
+		"title": "数据字典"
+	}
+}

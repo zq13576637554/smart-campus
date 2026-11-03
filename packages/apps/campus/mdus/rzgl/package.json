@@ -1,0 +1,9 @@
+{
+	"name": "apps_campus_mdus_rzgl",
+	"description": "操作日志",
+	"private": true,
+	"mdu": {
+		"path": "/rzgl/",
+		"title": "操作日志"
+	}
+}

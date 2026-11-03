@@ -1,0 +1,6 @@
+{
+	"name": "@lm/store",
+	"version": "1.0.0",
+	"private": true,
+	"description": "基于 pinia 的全局状态（对应 lmStore/modules/*）"
+}

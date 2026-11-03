@@ -1,0 +1,9 @@
+{
+	"name": "apps_campus_mdus_xsgl",
+	"description": "学生档案管理",
+	"private": true,
+	"mdu": {
+		"path": "/xsgl/",
+		"title": "学生档案"
+	}
+}

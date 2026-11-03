@@ -1,0 +1,9 @@
+{
+	"name": "apps_campus_mdus_tzgg",
+	"description": "通知公告",
+	"private": true,
+	"mdu": {
+		"path": "/tzgg/",
+		"title": "通知公告"
+	}
+}

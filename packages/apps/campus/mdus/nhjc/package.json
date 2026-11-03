@@ -1,0 +1,9 @@
+{
+	"name": "apps_campus_mdus_nhjc",
+	"description": "能耗监测",
+	"private": true,
+	"mdu": {
+		"path": "/nhjc/",
+		"title": "能耗监测"
+	}
+}

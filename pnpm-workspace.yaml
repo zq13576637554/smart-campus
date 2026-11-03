@@ -1,0 +1,11 @@
+packages:
+  - "packages/apis/*"
+  - "packages/store"
+  - "packages/utils"
+  - "packages/hooks"
+  - "packages/libs"
+  - "packages/pureai"
+  - "packages/cmps/*"
+  - "packages/irepos/*"
+  - "packages/apps/*/entry"
+  - "packages/apps/*/mdus/*"

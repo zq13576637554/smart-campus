@@ -1,0 +1,9 @@
+{
+	"name": "apps_campus_mdus_fkyy",
+	"description": "访客预约",
+	"private": true,
+	"mdu": {
+		"path": "/fkyy/",
+		"title": "访客预约"
+	}
+}

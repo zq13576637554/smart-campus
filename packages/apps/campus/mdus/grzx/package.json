@@ -1,0 +1,9 @@
+{
+	"name": "apps_campus_mdus_grzx",
+	"description": "个人中心",
+	"private": true,
+	"mdu": {
+		"path": "/grzx/",
+		"title": "个人中心"
+	}
+}

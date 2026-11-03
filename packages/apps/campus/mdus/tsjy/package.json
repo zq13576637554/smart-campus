@@ -1,0 +1,9 @@
+{
+	"name": "apps_campus_mdus_tsjy",
+	"description": "图书馆借阅",
+	"private": true,
+	"mdu": {
+		"path": "/tsjy/",
+		"title": "图书馆"
+	}
+}

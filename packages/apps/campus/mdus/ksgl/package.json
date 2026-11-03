@@ -1,0 +1,9 @@
+{
+	"name": "apps_campus_mdus_ksgl",
+	"description": "考试管理",
+	"private": true,
+	"mdu": {
+		"path": "/ksgl/",
+		"title": "考试管理"
+	}
+}

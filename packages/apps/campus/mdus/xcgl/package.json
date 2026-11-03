@@ -1,0 +1,9 @@
+{
+	"name": "apps_campus_mdus_xcgl",
+	"description": "校车管理",
+	"private": true,
+	"mdu": {
+		"path": "/xcgl/",
+		"title": "校车管理"
+	}
+}

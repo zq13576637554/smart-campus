@@ -1,0 +1,9 @@
+{
+	"name": "apps_campus_mdus_xtgl",
+	"description": "系统管理",
+	"private": true,
+	"mdu": {
+		"path": "/xtgl/",
+		"title": "系统管理"
+	}
+}

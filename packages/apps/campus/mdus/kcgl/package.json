@@ -1,0 +1,9 @@
+{
+	"name": "apps_campus_mdus_kcgl",
+	"description": "课程管理",
+	"private": true,
+	"mdu": {
+		"path": "/kcgl/",
+		"title": "课程管理"
+	}
+}

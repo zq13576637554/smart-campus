@@ -1,0 +1,6 @@
+{
+	"name": "@lm/libs",
+	"version": "1.0.0",
+	"private": true,
+	"description": "第三方库统一出口与 schema DSL 引擎（对应 lmUtils/lmLibs）"
+}

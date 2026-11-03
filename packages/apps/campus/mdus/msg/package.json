@@ -1,0 +1,9 @@
+{
+	"name": "apps_campus_mdus_msg",
+	"description": "消息中心",
+	"private": true,
+	"mdu": {
+		"path": "/msg/",
+		"title": "消息中心"
+	}
+}

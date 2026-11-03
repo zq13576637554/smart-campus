@@ -1,0 +1,9 @@
+{
+	"name": "apps_campus_mdus_mjgl",
+	"description": "门禁安防",
+	"private": true,
+	"mdu": {
+		"path": "/mjgl/",
+		"title": "门禁安防"
+	}
+}

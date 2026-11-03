@@ -1,0 +1,9 @@
+{
+	"name": "apps_campus_mdus_kqgl",
+	"description": "智能考勤",
+	"private": true,
+	"mdu": {
+		"path": "/kqgl/",
+		"title": "智能考勤"
+	}
+}

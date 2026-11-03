@@ -1,0 +1,29 @@
+# ---------- 依赖与构建产物 ----------
+node_modules
+dist
+.vite
+*.tsbuildinfo
+
+# ---------- 测试产物 ----------
+test-results
+playwright-report
+coverage
+
+# ---------- 环境变量 ----------
+# .env.example 是模板，需要提交；真实密钥只放 .env.local（见下）
+.env
+.env.*
+!.env.example
+
+# 本机私有配置（含 AI Key）
+*.local
+
+# ---------- 系统与编辑器 ----------
+.DS_Store
+Thumbs.db
+.idea
+*.swp
+
+# ---------- 其他 ----------
+stats.html
+*.log

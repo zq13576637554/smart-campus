@@ -1,0 +1,6 @@
+{
+	"name": "@lm/hooks",
+	"version": "1.0.0",
+	"private": true,
+	"description": "组合式函数与全局指令（对应 lmHooks/*）"
+}

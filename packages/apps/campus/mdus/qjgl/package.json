@@ -1,0 +1,9 @@
+{
+	"name": "apps_campus_mdus_qjgl",
+	"description": "请假审批",
+	"private": true,
+	"mdu": {
+		"path": "/qjgl/",
+		"title": "请假审批"
+	}
+}

@@ -1,0 +1,9 @@
+{
+	"name": "apps_campus_mdus_bbzx",
+	"description": "报表中心",
+	"private": true,
+	"mdu": {
+		"path": "/bbzx/",
+		"title": "报表中心"
+	}
+}

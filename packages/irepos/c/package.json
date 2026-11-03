@@ -1,0 +1,6 @@
+{
+	"name": "@lm/irepos-c",
+	"version": "1.0.0",
+	"private": true,
+	"description": "表格列渲染器（对应 lmIreposC/*）"
+}

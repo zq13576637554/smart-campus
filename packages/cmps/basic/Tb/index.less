@@ -1,0 +1,185 @@
+.n-tb {
+	display: flex;
+	flex-direction: column;
+	min-height: 0;
+	min-width: 0;
+	background: var(--sc-card);
+	border-radius: var(--sc-radius-lg);
+	box-shadow: var(--sc-shadow-1);
+	padding: 14px 16px 8px;
+
+	&__toolbar {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		flex-wrap: wrap;
+		gap: 8px;
+		padding-bottom: 12px;
+	}
+
+	&__toolbar-left {
+		display: flex;
+		align-items: baseline;
+		gap: 10px;
+	}
+
+	&__title {
+		position: relative;
+		font-size: 15px;
+		font-weight: 600;
+		color: var(--sc-text-1);
+
+		&::before {
+			content: "";
+			display: inline-block;
+			width: 3px;
+			height: 13px;
+			margin-right: 8px;
+			border-radius: 2px;
+			background: var(--sc-primary);
+			vertical-align: -1px;
+		}
+	}
+
+	&__total {
+		font-size: 12px;
+		color: var(--sc-text-3);
+	}
+
+	&__toolbar-right {
+		display: flex;
+		align-items: center;
+		gap: 6px;
+	}
+
+	&__icon-btn {
+		width: 30px;
+		height: 30px;
+		padding: 0;
+		color: var(--sc-text-2);
+		border-radius: var(--sc-radius-sm);
+
+		&:hover {
+			background: var(--sc-bg-sunken);
+		}
+	}
+
+	&__table-wrap {
+		flex: 1;
+		min-height: 0;
+		display: flex;
+		flex-direction: column;
+	}
+
+	&__skeleton {
+		flex: 1;
+		padding: 16px 12px;
+	}
+
+	&__table {
+		flex: 1;
+		min-height: 0;
+
+		.el-table__inner-wrapper::before {
+			height: 0;
+		}
+	}
+
+	&__pager {
+		display: flex;
+		justify-content: flex-end;
+		margin-top: 6px;
+		padding: 10px 0 4px;
+		border-top: 1px solid var(--sc-border);
+	}
+
+	/* ---------------- 移动端 ---------------- */
+	@media (max-width: 768px) {
+		padding: 12px 10px 6px;
+
+		&__toolbar {
+			padding-bottom: 10px;
+		}
+
+		&__title {
+			font-size: 14px;
+		}
+
+		&__toolbar-right {
+			flex-wrap: wrap;
+		}
+
+		&__pager {
+			justify-content: center;
+			overflow: auto;
+
+			.el-pagination {
+				flex-wrap: wrap;
+				justify-content: center;
+				gap: 2px;
+			}
+
+			/* 收紧页码按钮，避免出现两行 */
+			.el-pager li,
+			.btn-prev,
+			.btn-next {
+				min-width: 26px;
+				margin: 0;
+			}
+
+			/* 小屏隐藏每页条数、总数与跳页输入，保留页码 */
+			.el-pagination__sizes,
+			.el-pagination__jump,
+			.el-pagination__total {
+				display: none;
+			}
+		}
+	}
+
+	&__cols {
+		max-height: 320px;
+		overflow: auto;
+		padding: 10px 12px;
+		min-width: 160px;
+
+		&-head {
+			margin-bottom: 8px;
+			font-size: 12px;
+			color: var(--sc-text-3);
+		}
+
+		.el-checkbox {
+			display: flex;
+			height: 28px;
+		}
+	}
+}
+
+.ir-link {
+	color: var(--sc-primary);
+	cursor: pointer;
+	text-decoration: none;
+	font-weight: 500;
+
+	&:hover {
+		color: var(--sc-primary-hover);
+		text-decoration: underline;
+	}
+}
+
+.ir-empty {
+	color: var(--sc-text-4);
+}
+
+.ir-progress {
+	width: 100%;
+}
+
+.ir-idx {
+	color: var(--sc-text-3);
+	font-variant-numeric: tabular-nums;
+}
+
+.ir-enum {
+	font-weight: 500;
+}

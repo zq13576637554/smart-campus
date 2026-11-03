@@ -1,0 +1,9 @@
+{
+	"name": "apps_campus_mdus_cdgl",
+	"description": "菜单与按钮权限",
+	"private": true,
+	"mdu": {
+		"path": "/cdgl/",
+		"title": "菜单权限"
+	}
+}

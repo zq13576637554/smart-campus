@@ -1,0 +1,9 @@
+{
+	"name": "apps_campus_mdus_zctz",
+	"description": "资产设备台账",
+	"private": true,
+	"mdu": {
+		"path": "/zctz/",
+		"title": "资产台账"
+	}
+}

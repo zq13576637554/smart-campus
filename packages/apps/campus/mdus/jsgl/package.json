@@ -1,0 +1,9 @@
+{
+	"name": "apps_campus_mdus_jsgl",
+	"description": "教职工管理",
+	"private": true,
+	"mdu": {
+		"path": "/jsgl/",
+		"title": "教职工管理"
+	}
+}

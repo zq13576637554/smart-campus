@@ -1,0 +1,9 @@
+{
+	"name": "apps_campus_mdus_parent",
+	"description": "家长端（移动端）",
+	"private": true,
+	"mdu": {
+		"path": "/parent/",
+		"title": "家长端"
+	}
+}

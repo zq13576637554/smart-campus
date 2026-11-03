@@ -1,0 +1,9 @@
+{
+	"name": "apps_campus_mdus_kcb",
+	"description": "课表管理",
+	"private": true,
+	"mdu": {
+		"path": "/kcb/",
+		"title": "课表管理"
+	}
+}

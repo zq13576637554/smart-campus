@@ -1,0 +1,9 @@
+{
+	"name": "apps_campus_mdus_bjgl",
+	"description": "班级管理",
+	"private": true,
+	"mdu": {
+		"path": "/bjgl/",
+		"title": "班级管理"
+	}
+}

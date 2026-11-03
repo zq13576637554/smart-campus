@@ -1,0 +1,9 @@
+{
+	"name": "apps_campus_mdus_xfyj",
+	"description": "消费异常预警",
+	"private": true,
+	"mdu": {
+		"path": "/xfyj/",
+		"title": "消费预警"
+	}
+}

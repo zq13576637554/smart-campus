@@ -1,0 +1,9 @@
+{
+	"name": "apps_campus_mdus_xkzx",
+	"description": "选课中心",
+	"private": true,
+	"mdu": {
+		"path": "/xkzx/",
+		"title": "选课中心"
+	}
+}

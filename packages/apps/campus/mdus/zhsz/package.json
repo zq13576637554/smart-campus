@@ -1,0 +1,9 @@
+{
+	"name": "apps_campus_mdus_zhsz",
+	"description": "综合素质评价",
+	"private": true,
+	"mdu": {
+		"path": "/zhsz/",
+		"title": "综合素质评价"
+	}
+}

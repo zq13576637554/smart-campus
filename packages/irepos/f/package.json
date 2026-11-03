@@ -1,0 +1,6 @@
+{
+	"name": "@lm/irepos-f",
+	"version": "1.0.0",
+	"private": true,
+	"description": "表单字段工厂（对应 lmIreposF/*）"
+}

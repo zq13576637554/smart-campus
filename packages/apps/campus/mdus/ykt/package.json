@@ -1,0 +1,9 @@
+{
+	"name": "apps_campus_mdus_ykt",
+	"description": "校园一卡通",
+	"private": true,
+	"mdu": {
+		"path": "/ykt/",
+		"title": "校园一卡通"
+	}
+}

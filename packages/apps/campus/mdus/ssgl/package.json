@@ -1,0 +1,9 @@
+{
+	"name": "apps_campus_mdus_ssgl",
+	"description": "智慧宿舍",
+	"private": true,
+	"mdu": {
+		"path": "/ssgl/",
+		"title": "智慧宿舍"
+	}
+}

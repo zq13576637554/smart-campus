@@ -1,0 +1,9 @@
+{
+	"name": "apps_campus_mdus_ssbx",
+	"description": "宿舍报修",
+	"private": true,
+	"mdu": {
+		"path": "/ssbx/",
+		"title": "宿舍报修"
+	}
+}
