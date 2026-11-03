@@ -23,6 +23,7 @@ import { runCopilot } from "./copilot";
 import { buildReportInsight } from "./insight";
 import { parseNaturalQuery } from "./nlq";
 import { buildParentReport } from "./parentReport";
+import { buildTodo } from "./todo";
 import {
 	db,
 	type AccessRecord,
@@ -1976,6 +1977,14 @@ export const mockRoutes: MockRoute[] = [
 				]
 			});
 		}
+	},
+
+	/* ---------------- 待办中心 ---------------- */
+	{
+		method: "POST",
+		match: "/todo/list",
+		handler: ({ params }) =>
+			ok(buildTodo({ leaves, repairs: repairOrders, visitors, bills }, params.category))
 	},
 
 	/* ---------------- AI 助手 ---------------- */

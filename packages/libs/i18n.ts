@@ -12,6 +12,7 @@ const STORAGE_KEY = "CAMPUS_LOCALE";
 /** 菜单标题（按路由 path 索引） */
 export const MENU_I18N: Record<string, { zh: string; en: string }> = {
 	"/home/": { zh: "首页", en: "Dashboard" },
+	"/dbzx/": { zh: "待办中心", en: "To-do" },
 	"/xsgl/": { zh: "学生档案", en: "Students" },
 	"/bjgl/": { zh: "班级管理", en: "Classes" },
 	"/jsgl/": { zh: "教职工管理", en: "Staff" },

@@ -88,6 +88,7 @@ interface PageSeed {
 
 export const PAGE_SEEDS: PageSeed[] = [
 	{ id: "M001", group: "G01", title: "首页", path: "/home/", icon: "home", sort: 1 },
+	{ id: "M002", group: "G01", title: "待办中心", path: "/dbzx/", icon: "todo", sort: 2 },
 	{ id: "M010", group: "G10", title: "学生档案", path: "/xsgl/", icon: "student", sort: 10, buttons: "student:add,student:edit,student:delete,student:export,student:import" },
 	{ id: "M011", group: "G10", title: "班级管理", path: "/bjgl/", icon: "class", sort: 11, buttons: "class:add,class:edit,class:delete" },
 	{ id: "M012", group: "G10", title: "教职工管理", path: "/jsgl/", icon: "teacher", sort: 12, buttons: "teacher:add,teacher:edit,teacher:delete" },

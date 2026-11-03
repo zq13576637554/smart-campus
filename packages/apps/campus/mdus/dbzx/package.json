@@ -1,0 +1,9 @@
+{
+	"name": "apps_campus_mdus_dbzx",
+	"description": "待办中心",
+	"private": true,
+	"mdu": {
+		"path": "/dbzx/",
+		"title": "待办中心"
+	}
+}

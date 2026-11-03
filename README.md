@@ -55,7 +55,7 @@ smart-campus
    │  └─ mock/                      # db / extra / extra2 / knowledge / router / adapter
    ├─ apps/campus
    │  ├─ entry                      # bootstrap / routes / plugins / assets
-   │  └─ mdus/<35 个业务模块>
+   │  └─ mdus/<36 个业务模块>
    ├─ cmps
    │  ├─ basic    # Form Tb QueryView Dialog NTag Btn ActionGroup NVirtualList ...
    │  ├─ biz      # NPageBasic Menu ToolHeader BreadCrumb TagViews RealtimeFeed ImportPage
@@ -166,6 +166,7 @@ useSimpleCols([
 | 个人中心 | `/grzx/` | 资料、改密码、偏好（密度/默认首页/主题） |
 | 批量导入 | `/xsgl/import/` | 模板下载 → 拖拽上传 → 逐行校验 → 只导入有效行 |
 | 请假审批 | `/qjgl/` | 发起 → 审批 → **自动写回考勤**，指标卡实时更新 |
+| 待办中心 | `/dbzx/` | 跨模块聚合请假审批 / 报修派单 / 访客审核 / 缴费催缴，紧急优先排序，一键跳转处理 |
 
 **B 段 · 业务纵深**
 
@@ -218,13 +219,13 @@ useSimpleCols([
 ## 九、测试与质量
 
 ```bash
-pnpm test:unit     # Vitest 单元测试（38 个用例，纯函数层）
+pnpm test:unit     # Vitest 单元测试（45 个用例，纯函数层）
 pnpm test:e2e      # Playwright 主链路（7 条）
 pnpm test:ai-proxy # AI 代理契约检查（密钥注入 / 上游透传 / 兜底 503）
 pnpm build         # vue-tsc 类型检查 + 产物构建
 ```
 
-当前状态：**35 个业务模块 / 250+ 源文件 / 34 条路由全部可访问，控制台 0 错误**。
+当前状态：**36 个业务模块 / 260+ 源文件 / 35 条路由全部可访问，控制台 0 错误**。
 
 ### 测试分层
 
