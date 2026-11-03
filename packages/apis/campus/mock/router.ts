@@ -25,6 +25,7 @@ import { parseNaturalQuery } from "./nlq";
 import { buildParentReport } from "./parentReport";
 import { buildTodo } from "./todo";
 import { buildExportData, EXPORT_TYPES, exportLogs, IMPORT_TYPES } from "./dataCenter";
+import { applyImport } from "./importApply";
 import {
 	db,
 	type AccessRecord,
@@ -2015,6 +2016,11 @@ export const mockRoutes: MockRoute[] = [
 		method: "POST",
 		match: "/data/export",
 		handler: ({ params }) => ok(buildExportData(params.key))
+	},
+	{
+		method: "POST",
+		match: "/data/import",
+		handler: ({ params }) => ok(applyImport(params.type, params.rows || []))
 	},
 
 	/* ---------------- 待办中心 ---------------- */

@@ -56,7 +56,7 @@ export const IMPORT_TYPES: ImportTypeDef[] = [
 		module: "学籍管理",
 		icon: "student",
 		available: true,
-		route: "/xsgl/import/",
+		route: "/dzzx/import/?type=student",
 		count: db.students.length,
 		columns: [
 			{ label: "姓名", prop: "name", required: true },
@@ -73,7 +73,8 @@ export const IMPORT_TYPES: ImportTypeDef[] = [
 		label: "教职工",
 		module: "学籍管理",
 		icon: "teacher",
-		available: false,
+		available: true,
+		route: "/dzzx/import/?type=teacher",
 		count: db.teachers.length,
 		columns: [
 			{ label: "姓名", prop: "name", required: true },
@@ -88,7 +89,8 @@ export const IMPORT_TYPES: ImportTypeDef[] = [
 		label: "课程",
 		module: "教学管理",
 		icon: "course",
-		available: false,
+		available: true,
+		route: "/dzzx/import/?type=course",
 		count: db.courses.length,
 		columns: [
 			{ label: "课程名称", prop: "courseName", required: true },
@@ -102,7 +104,8 @@ export const IMPORT_TYPES: ImportTypeDef[] = [
 		label: "成绩",
 		module: "教学管理",
 		icon: "score",
-		available: false,
+		available: true,
+		route: "/dzzx/import/?type=score",
 		count: db.scores.length,
 		columns: [
 			{ label: "学号", prop: "studentNo", required: true },

@@ -220,13 +220,13 @@ useSimpleCols([
 ## 九、测试与质量
 
 ```bash
-pnpm test:unit     # Vitest 单元测试（50 个用例，纯函数层）
+pnpm test:unit     # Vitest 单元测试（58 个用例，纯函数层）
 pnpm test:e2e      # Playwright 主链路（7 条）
 pnpm test:ai-proxy # AI 代理契约检查（密钥注入 / 上游透传 / 兜底 503）
 pnpm build         # vue-tsc 类型检查 + 产物构建
 ```
 
-当前状态：**37 个业务模块 / 270+ 源文件 / 36 条路由全部可访问，控制台 0 错误**。
+当前状态：**37 个业务模块 / 280+ 源文件 / 37 条路由全部可访问，控制台 0 错误**。
 
 ### 测试分层
 

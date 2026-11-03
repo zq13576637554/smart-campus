@@ -3,11 +3,14 @@ import { buildExportData, EXPORT_TYPES, IMPORT_TYPES } from "../packages/apis/ca
 import { db } from "../packages/apis/campus/mock/db";
 
 describe("导入导出中心", () => {
-	it("导入类型包含学生档案且已开放", () => {
+	it("四类导入均已开放并指向通用导入页", () => {
+		expect(IMPORT_TYPES).toHaveLength(4);
+		expect(IMPORT_TYPES.every(t => t.available)).toBe(true);
+		IMPORT_TYPES.forEach(t => {
+			expect(t.route).toBe(`/dzzx/import/?type=${t.key}`);
+		});
+
 		const student = IMPORT_TYPES.find(t => t.key === "student");
-		expect(student).toBeTruthy();
-		expect(student?.available).toBe(true);
-		expect(student?.route).toBe("/xsgl/import/");
 		expect(student?.columns.some(c => c.required)).toBe(true);
 	});
 

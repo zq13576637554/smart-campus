@@ -54,3 +54,9 @@ export const $dataExportLogsGet = (): Promise<ExportLog[]> => http.get("/data/ex
 /** 追加一条导出记录 */
 export const $dataExportLogPost = (data: Partial<ExportLog>): Promise<ExportLog> =>
 	http.post("/data/export-log", data);
+
+/** 通用导入（教职工 / 课程 / 成绩） */
+export const $dataImportPost = (data: { type: string; rows: Record<string, any>[] }): Promise<{
+	success: number;
+	failed: { row: number; message: string }[];
+}> => http.post("/data/import", data);

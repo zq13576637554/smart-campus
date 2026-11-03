@@ -10,5 +10,17 @@ export default [
 			icon: "files",
 			sort: 56
 		}
+	},
+	{
+		name: "dzzxImport",
+		path: "/dzzx/import/",
+		component: () => import("./views/Import/index.vue"),
+		meta: {
+			title: "dzzxImport",
+			zhTitle: "批量导入",
+			group: "系统设置",
+			icon: "files",
+			sort: 57
+		}
 	}
 ];
