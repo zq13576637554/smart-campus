@@ -209,8 +209,9 @@ import NIcon from "lmCmpsBasic/NIcon";
 import NTag from "lmCmpsBasic/NTag";
 import Empty from "lmCmpsBasic/Empty";
 import { $aiChatPost } from "lmApisCampus/api/dashboard";
-import { $aiAuditPost, $aiCopilotPost, $aiKnowledgeListGet, $aiKnowledgeSearchGet, $aiReportPost } from "lmApisCampus/api/ai";
-import { CAMPUS_SYSTEM_PROMPT, chatWithModel, chatWithModelStream, isModelEnabled, PROVIDER_LABEL, providerModel, providerName } from "lmApisCampus/ai/provider";
+import { $aiAuditPost, $aiKnowledgeListGet, $aiKnowledgeSearchGet, $aiReportPost } from "lmApisCampus/api/ai";
+import { isModelEnabled, PROVIDER_LABEL, providerModel, providerName } from "lmApisCampus/ai/provider";
+import { askAgent } from "lmApisCampus/ai/agent";
 import { $studentPagePost } from "lmApisCampus/api/academic";
 import { useAppStore } from "lmStore/modules/app";
 import { sync } from "lmUtils/promise";
@@ -300,65 +301,49 @@ const send = async (text?: string) => {
 	const reply = messages.value[messages.value.length - 1];
 	await scrollToBottom();
 
-	const [err, res] = await sync($aiCopilotPost({ question: content }));
 	reply.loading = false;
-	if (err) {
-		reply.content = "抱歉，AI 服务暂时不可用，请稍后再试。";
-	} else {
-		const data = res as any;
-		reply.content = data?.reply || data?.answer || "暂时没有找到相关数据。";
-		reply.tool = data?.tool || "";
-		reply.cards = data?.cards || [];
-		reply.followUps = data?.followUps || [];
-		reply.references = data?.references || [];
-		reply.time = data?.time || dayjs().format("HH:mm");
-	}
+	reply.time = dayjs().format("HH:mm");
 
-	// 已接入真实模型：数据类问题用工具结果（准确、快），其余问题交给模型（流式输出）
-	if (isModelEnabled && !reply.tool) {
-		const history = messages.value
-			.filter(m => !m.loading && m.content && m !== reply)
-			.slice(-6)
-			.map(m => ({ role: m.role as "user" | "assistant", content: m.content }));
+	// 三级路由：规则命中工具 → 直出；否则交给模型（模型可自行调用工具）
+	reply.streaming = true;
+	isStreaming.value = true;
+	abortCtrl = new AbortController();
+	let ok = true;
 
-		const payload = [{ role: "system" as const, content: CAMPUS_SYSTEM_PROMPT }, ...history];
+	const history = messages.value
+		.filter(m => m !== reply && m.content)
+		.slice(-6)
+		.map(m => ({ role: m.role as "user" | "assistant", content: m.content.trim() }));
 
-		reply.byModel = true;
-		reply.streaming = true;
-		reply.content = "";
-		isStreaming.value = true;
-		abortCtrl = new AbortController();
-
-		try {
-			reply.content = await chatWithModelStream(payload, {
-				signal: abortCtrl.signal,
-				onDelta: (_d, full) => {
-					reply.content = full;
-					scheduleScroll();
-				}
-			});
-		} catch (e: any) {
-			if (e?.name === "AbortError") {
-				// 用户主动停止：保留已生成内容
-				reply.content = `${reply.content || ""}\n\n> 已停止生成`;
-			} else if (!reply.content) {
-				// 完全没拿到内容时退回一次性请求
-				try {
-					reply.content = await chatWithModel(payload);
-				} catch (e2: any) {
-					reply.byModel = false;
-					reply.content = `抱歉，模型暂时不可用（${e2?.message || "未知错误"}），已回退到本地规则引擎。`;
-				}
-			} else {
-				reply.content += `\n\n> 输出中断：${e?.message || "网络异常"}`;
+	try {
+		const result = await askAgent(content, {
+			history,
+			signal: abortCtrl.signal,
+			onDelta: (_d, full) => {
+				reply.content = full;
+				scheduleScroll();
 			}
-		} finally {
-			abortCtrl = null;
-			isStreaming.value = false;
-			reply.streaming = false;
-		}
+		});
 
-		reply.cards = [];
+		reply.content = result.content;
+		reply.tool = result.tool || "";
+		reply.cards = result.cards || [];
+		reply.followUps = result.followUps || [];
+		reply.byModel = result.source !== "rule";
+	} catch (e: any) {
+		ok = false;
+		if (e?.name === "AbortError") {
+			// 用户主动停止：保留已生成内容
+			reply.content = `${reply.content || ""}\n\n> 已停止生成`;
+		} else if (!reply.content) {
+			reply.content = `抱歉，模型暂时不可用（${e?.message || "未知错误"}），已回退到本地规则引擎。`;
+		} else {
+			reply.content += `\n\n> 输出中断：${e?.message || "网络异常"}`;
+		}
+	} finally {
+		abortCtrl = null;
+		isStreaming.value = false;
+		reply.streaming = false;
 	}
 	// 留痕：写入审计日志（失败不阻塞对话）
 	$aiAuditPost({
@@ -366,7 +351,7 @@ const send = async (text?: string) => {
 		answer: reply.content,
 		source: reply.tool || (reply.byModel ? providerModel : "rule"),
 		cost: Date.now() - startedAt,
-		success: !err,
+		success: ok,
 		operator: appStore.userInfo?.userName,
 		nickName: appStore.userInfo?.nickName
 	}).catch(() => {});

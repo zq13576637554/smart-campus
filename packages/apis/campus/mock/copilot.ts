@@ -340,3 +340,30 @@ export function runCopilot(question: string): CopilotResult {
 
 	return none;
 }
+
+/**
+ * 工具名 → 合成问题
+ * @desc 复用 runCopilot 的解析逻辑：由参数拼一句话，再走同一套规则路由，
+ *       避免为 function calling 再写一套参数提取。
+ */
+const TOOL_QUESTION: Record<string, (args: Record<string, any>) => string> = {
+	queryStudents: a => `学生名单 ${a.className || ""} ${a.grade || ""}`,
+	queryAttendance: a => `考勤 ${a.className || ""} ${a.days ? `最近${a.days}天` : ""}`,
+	queryScores: a => `成绩 ${a.className || ""}`,
+	queryLeave: () => `请假`,
+	queryCards: a => `一卡通 ${a.threshold ? `低于${a.threshold}元` : ""}`,
+	queryRepairs: () => `报修`,
+	queryEvaluations: () => `综合素质`
+};
+
+/** 按工具名直接执行（供 function calling 使用） */
+export function runTool(name: string, args: Record<string, any> = {}): CopilotResult | null {
+	const build = TOOL_QUESTION[name];
+	if (!build) return null;
+	const result = runCopilot(build(args));
+	// 校验确实命中目标工具，避免合成问题被别的关键词抢走
+	return result.tool === name ? result : null;
+}
+
+/** 可被模型调用的工具名清单 */
+export const TOOL_NAMES = Object.keys(TOOL_QUESTION);

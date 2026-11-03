@@ -43,6 +43,10 @@ export interface CopilotResult {
 export const $aiCopilotPost = (data: { question: string }): Promise<CopilotResult> =>
 	http.post("/ai/copilot", data);
 
+/** 通用导入（教职工 / 课程 / 成绩） */
+export const $aiToolPost = (data: { name: string; args?: Record<string, any> }): Promise<CopilotResult> =>
+	http.post("/ai/tool", data);
+
 /** 报表解读 */
 export const $aiReportInsightPost = (data: { reportType: string; rows: any[] }): Promise<{
 	summary: string;

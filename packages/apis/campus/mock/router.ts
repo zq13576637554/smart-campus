@@ -19,7 +19,7 @@ import {
 	visitors
 } from "./extra2";
 import { knowledgeDocs, searchKnowledge } from "./knowledge";
-import { runCopilot } from "./copilot";
+import { runCopilot, runTool } from "./copilot";
 import { buildReportInsight } from "./insight";
 import { parseNaturalQuery } from "./nlq";
 import { buildParentReport } from "./parentReport";
@@ -1894,6 +1894,15 @@ export const mockRoutes: MockRoute[] = [
 				}${params.cost ? `（${params.cost}ms）` : ""}`
 			});
 			return ok({ id });
+		}
+	},
+	{
+		method: "POST",
+		match: "/ai/tool",
+		handler: ({ params }) => {
+			const result = runTool(params.name, params.args || {});
+			if (!result) return { status: false, code: 400, msg: `未知或不匹配的工具：${params.name}`, result: null };
+			return ok(result);
 		}
 	},
 	{

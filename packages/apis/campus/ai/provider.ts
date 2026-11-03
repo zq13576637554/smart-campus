@@ -6,8 +6,14 @@
 export type ProviderName = "rule" | "openai" | "ollama";
 
 export interface ChatMessage {
-	role: "system" | "user" | "assistant";
+	role: "system" | "user" | "assistant" | "tool";
 	content: string;
+	/** assistant 发起工具调用时携带 */
+	tool_calls?: any[];
+	/** tool 角色的结果需要回填 id */
+	tool_call_id?: string;
+	/** DeepSeek 思考模式要求把推理内容原样回传 */
+	reasoning_content?: string;
 }
 
 export const providerName = ((import.meta.env.VITE_AI_PROVIDER as string) || "rule") as ProviderName;
@@ -76,21 +82,26 @@ export interface StreamOptions {
  * @desc OpenAI 兼容：`data: {"choices":[{"delta":{"content":"…"}}]}`，结束标记 `data: [DONE]`
  *       Ollama：每行一个 JSON，内容在 `message.content`
  */
-export function extractDelta(line: string, provider: ProviderName = providerName): string {
+export function parseStreamLine(line: string): any | null {
 	const raw = (line || "").trim();
-	if (!raw) return "";
+	if (!raw) return null;
 
 	const payloadText = raw.startsWith("data:") ? raw.slice(5).trim() : raw;
-	if (!payloadText || payloadText === "[DONE]") return "";
+	if (!payloadText || payloadText === "[DONE]") return null;
 
 	try {
-		const json = JSON.parse(payloadText);
-		const delta = provider === "ollama" ? (json?.message?.content ?? "") : (json?.choices?.[0]?.delta?.content ?? "");
-		return typeof delta === "string" ? delta : "";
+		return JSON.parse(payloadText);
 	} catch {
-		// 半行 / 心跳 / 非 JSON，忽略
-		return "";
+		// 半行 / 心跳 / 非 JSON
+		return null;
 	}
+}
+
+export function extractDelta(line: string, provider: ProviderName = providerName): string {
+	const json = parseStreamLine(line);
+	if (!json) return "";
+	const delta = provider === "ollama" ? (json?.message?.content ?? "") : (json?.choices?.[0]?.delta?.content ?? "");
+	return typeof delta === "string" ? delta : "";
 }
 
 /**
@@ -146,5 +157,125 @@ export async function chatWithModelStream(messages: ChatMessage[], opts: StreamO
 
 	if (!full.trim()) throw new Error("模型返回内容为空");
 	return full.trim();
+}
+
+export interface ToolCallResult {
+	id: string;
+	name: string;
+	args: Record<string, any>;
+}
+
+export interface ToolStreamResult {
+	content: string;
+	toolCalls: ToolCallResult[];
+	/** 需要回传给模型的 assistant 消息（仅在发生工具调用时非空） */
+	assistantMessage: ChatMessage | null;
+}
+
+/**
+ * 带工具的流式调用（function calling）
+ * @desc 边流边累积 tool_calls 分片；无工具调用时内容已经流式输出完毕
+ */
+export async function chatWithToolsStream(
+	messages: ChatMessage[],
+	tools: any[],
+	opts: StreamOptions & { toolChoice?: "auto" | "none" } = {}
+): Promise<ToolStreamResult> {
+	if (!isModelEnabled) throw new Error("RULE_ENGINE");
+
+	const endpoint = providerName === "ollama" ? `${AI_BASE}/api/chat` : `${AI_BASE}/chat/completions`;
+	const payload =
+		providerName === "ollama"
+			? { model: providerModel, messages, tools, stream: true, options: { temperature: opts.temperature ?? 0.3 } }
+			: {
+					model: providerModel,
+					messages,
+					tools,
+					tool_choice: opts.toolChoice ?? "auto",
+					temperature: opts.temperature ?? 0.3,
+					stream: true
+				};
+
+	const res = await fetch(endpoint, {
+		method: "POST",
+		headers: { "content-type": "application/json" },
+		body: JSON.stringify(payload),
+		signal: opts.signal
+	});
+
+	if (!res.ok || !res.body) {
+		const detail = await res.text().catch(() => "");
+		throw new Error(`模型服务返回 ${res.status}${detail ? `：${detail.slice(0, 120)}` : ""}`);
+	}
+
+	const reader = res.body.getReader();
+	const decoder = new TextDecoder();
+	let buffer = "";
+	let full = "";
+	let reasoning = "";
+	const acc = new Map<number, { id: string; name: string; args: string }>();
+
+	const handleLine = (raw: string) => {
+		const json = parseStreamLine(raw);
+		if (!json) return;
+
+		const delta = providerName === "ollama" ? json?.message : json?.choices?.[0]?.delta;
+		if (!delta) return;
+
+		if (typeof delta.content === "string" && delta.content) {
+			full += delta.content;
+			opts.onDelta?.(delta.content, full);
+		}
+
+		// 思考模式：推理内容需要原样带回，否则多轮工具调用会 400
+		if (typeof delta.reasoning_content === "string") reasoning += delta.reasoning_content;
+
+		(delta.tool_calls || []).forEach((tc: any, i: number) => {
+			const idx = typeof tc.index === "number" ? tc.index : i;
+			const cur = acc.get(idx) || { id: "", name: "", args: "" };
+			if (tc.id) cur.id = tc.id;
+			if (tc.function?.name) cur.name += tc.function.name;
+			if (tc.function?.arguments) cur.args += tc.function.arguments;
+			acc.set(idx, cur);
+		});
+	};
+
+	for (;;) {
+		const { done, value } = await reader.read();
+		if (done) break;
+
+		buffer += decoder.decode(value, { stream: true });
+		const lines = buffer.split("\n");
+		buffer = lines.pop() || "";
+		lines.forEach(handleLine);
+	}
+	if (buffer) handleLine(buffer);
+
+	const toolCalls: ToolCallResult[] = Array.from(acc.values())
+		.filter(c => c.name)
+		.map(c => {
+			let args: Record<string, any> = {};
+			try {
+				args = c.args ? JSON.parse(c.args) : {};
+			} catch {
+				args = {};
+			}
+			return { id: c.id || `call_${c.name}`, name: c.name, args };
+		});
+
+	const assistantMessage: ChatMessage | null = toolCalls.length
+		? {
+				role: "assistant",
+				content: full,
+				...(reasoning ? { reasoning_content: reasoning } : {}),
+				tool_calls: toolCalls.map(c => ({
+					id: c.id,
+					type: "function",
+					function: { name: c.name, arguments: JSON.stringify(c.args) }
+				}))
+			}
+		: null;
+
+	return { content: full.trim(), toolCalls, assistantMessage };
 }
 
