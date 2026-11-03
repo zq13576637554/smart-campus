@@ -112,6 +112,9 @@ test.describe("智慧校园主链路", () => {
 	});
 
 	test("全部 34 条路由可访问，且无控制台错误", async ({ page }) => {
+		// CI runner 比本机慢，这条用例要遍历 34 条路由，放宽超时
+		test.setTimeout(180_000);
+
 		const errors: string[] = [];
 		page.on("pageerror", e => errors.push(`pageerror: ${e.message}`));
 		page.on("console", m => {
