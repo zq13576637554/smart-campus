@@ -88,7 +88,14 @@ export default defineConfig(({ mode }) => {
 		server: {
 			host: "0.0.0.0",
 			port: 8080,
-			open: false
+			open: false,
+			/** 关闭 mock（VITE_USE_MOCK=false）时，/api 转发到本地后端服务 */
+			proxy: {
+				"/api": {
+					target: process.env.API_PROXY_TARGET || "http://127.0.0.1:3001",
+					changeOrigin: true
+				}
+			}
 		},
 		build: {
 			outDir: "dist",

@@ -8,6 +8,8 @@
 		"dev": "vite",
 		"build": "vue-tsc --noEmit -p tsconfig.json && vite build",
 		"build:only": "vite build",
+		"build:server": "vite build --config vite.server.config.ts",
+		"start:server": "node server/api/serve.mjs",
 		"preview": "vite preview",
 		"typecheck": "vue-tsc --noEmit -p tsconfig.json",
 		"test:unit": "vitest run",

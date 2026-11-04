@@ -27,9 +27,9 @@ declare module "axios" {
 
 const LOGIN_REQ_URL = "/auth/login";
 
-/** axios 实例：开发环境经 vite 代理到 /api，生产环境同源 */
+/** axios 实例：默认同源 /api/，可用 VITE_API_BASE 指向独立后端 */
 export const service: AxiosInstance = axios.create({
-	baseURL: import.meta.env.DEV ? "/api/" : "/api/",
+	baseURL: import.meta.env.VITE_API_BASE || "/api/",
 	timeout: REQUEST_TIMEOUT,
 	withCredentials: true
 });

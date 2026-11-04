@@ -80,6 +80,18 @@ pnpm test:e2e         # Playwright E2E（使用本机 Edge，无需下载浏览�
 pnpm test:ai-proxy    # AI 代理契约检查（假上游 + 密钥注入断言）
 ```
 
+**接真实后端**（项目自带可运行的 HTTP 服务，复用同一份业务逻辑）：
+
+```bash
+pnpm build:server     # 打包后端 -> server/dist/api.mjs
+pnpm start:server     # 启动 http://127.0.0.1:3001
+
+# .env.local 关闭 mock 即可切过去
+VITE_USE_MOCK=false
+```
+
+详见 [docs/backend.md](docs/backend.md)。
+
 其他命令：
 
 ```bash
